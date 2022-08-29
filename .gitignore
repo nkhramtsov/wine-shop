@@ -2,4 +2,4 @@ env/
 .vscode/
 venv/
 index.html
-/.idea
+.idea/
