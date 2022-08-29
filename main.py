@@ -45,7 +45,7 @@ def main():
 
     template = env.get_template('template.html')
 
-    assortment = read_excel('wine3.xlsx')
+    assortment = read_excel('wine.xlsx')
     estimate_label = get_estimate_label()
 
     rendered_page = template.render(
