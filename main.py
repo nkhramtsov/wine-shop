@@ -1,8 +1,16 @@
+import argparse
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import datetime
 import pandas
 from collections import defaultdict
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--filepath', type=str, default='wine.xlsx')
+
+    return parser.parse_args()
 
 
 def get_estimate_label():
@@ -22,9 +30,9 @@ def get_estimate_label():
     return f'{years_estimated} лет'
 
 
-def read_excel(filename):
+def read_excel(filepath):
     products = pandas.read_excel(
-        filename,
+        filepath,
         na_values=' ',
         keep_default_na=False,
     ).to_dict(orient='records')
@@ -45,7 +53,8 @@ def main():
 
     template = env.get_template('template.html')
 
-    assortment = read_excel('wine.xlsx')
+    argument = parse_args()
+    assortment = read_excel(argument.filepath)
     estimate_label = get_estimate_label()
 
     rendered_page = template.render(
